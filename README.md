@@ -32,3 +32,7 @@ Any other compaction (`/compact`, the automatic one, another plugin's) is left t
 claude plugin validate <this folder>
 claude plugin test <this folder>
 ```
+
+## License
+
+MIT, see `LICENSE`.

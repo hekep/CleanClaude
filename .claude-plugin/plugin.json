@@ -1,5 +1,6 @@
 {
   "name": "clean",
   "version": "0.1.0",
-  "description": "/clean wipes the context but keeps the conversation id: a compaction whose whole result is one line, no model call"
+  "description": "/clean wipes the context but keeps the conversation id: a compaction whose whole result is one line, no model call",
+  "license": "MIT"
 }
