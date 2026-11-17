@@ -1,6 +1,20 @@
 {
-  "name": "clean",
-  "version": "0.1.0",
+  "name": "cleanclaude",
+  "displayName": "CleanClaude",
+  "version": "0.1.1",
   "description": "/clean wipes the context but keeps the conversation id: a compaction whose whole result is one line, no model call",
-  "license": "MIT"
+  "author": {
+    "name": "Ahco",
+    "url": "https://www.ahco.fi"
+  },
+  "homepage": "https://github.com/hekep/CleanClaude",
+  "repository": "https://github.com/hekep/CleanClaude",
+  "license": "MIT",
+  "keywords": [
+    "context",
+    "clear",
+    "compact",
+    "session",
+    "resume"
+  ]
 }

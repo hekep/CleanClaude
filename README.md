@@ -2,10 +2,12 @@
 
 A Claude Code mod that adds `/clean`: wipe the conversation's context but keep the conversation id and the transcript file.
 
+Made by [Ahco](https://www.ahco.fi), where it keeps a fleet of tmux-driven Claude Code sessions resumable by id.
+
 ## Install
 
 ```
-/plugin install clean --marketplace hekep/CleanClaude
+/plugin install cleanclaude --marketplace hekep/CleanClaude
 ```
 
 Typed at the prompt of a Claude Code terminal session; answer `y` to add the marketplace, then pick a scope. To run it from a checkout instead: `claude --plugin-dir <this folder>`, or list the folder in `CLAUDE_CODE_PLUGIN_DIRS`.
@@ -26,6 +28,10 @@ The command answers at once and the compaction follows a moment later (the engin
 
 Any other compaction (`/compact`, the automatic one, another plugin's) is left to the engine untouched.
 
+## What it touches
+
+Nothing outside the session. The plugin registers one slash command, hooks the session's compaction event and shows one toast. It opens no network connection, reads and writes no files, reads no environment variables or credentials, and keeps no data between sessions. Its whole source is the one module `hooks/register.ts`; `hooks/clean.test.ts` is its test.
+
 ## Check
 
 ```
@@ -35,4 +41,4 @@ claude plugin test <this folder>
 
 ## License
 
-MIT, see `LICENSE`.
+MIT, see `LICENSE`. Copyright Ahco, https://www.ahco.fi

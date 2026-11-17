@@ -1,5 +1,14 @@
 {
   "name": "CleanClaude",
-  "owner": { "name": "hekep" },
-  "plugins": [{ "name": "clean", "source": "./" }]
+  "owner": {
+    "name": "hekep"
+  },
+  "plugins": [
+    {
+      "name": "cleanclaude",
+      "source": "./",
+      "description": "/clean wipes the context but keeps the conversation id: a compaction whose whole result is one line, no model call"
+    }
+  ],
+  "description": "Ahco mods for Claude Code: cleanclaude gives /clean, which wipes the context but keeps the conversation id"
 }

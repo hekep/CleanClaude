@@ -2,6 +2,9 @@ import { expect, mock, test } from 'claude-code/testing'
 
 const MARK = '[/clean]'
 const engineSummary = { messages: [{ role: 'user' as const, text: 'ENGINE SUMMARY', toolUses: [] }] }
+// The fields the engine stamps on a compaction and on a command run (the kit wants them spelled out).
+const compaction = { trigger: 'manual' as const, messages: [] as const }
+const typed = { origin: { kind: 'composer' as const }, presentation: { isFullscreen: false, columns: 120 } }
 
 test('the marked compaction is answered with one line; the engine summarizer is never reached', async ($, on) => {
   let engineSaw = ''
@@ -11,14 +14,14 @@ test('the marked compaction is answered with one line; the engine summarizer is 
     return engineSummary
   })
 
-  const r = await $.session.compact({ instructions: `${MARK} Discard everything.` })
+  const r = await $.session.compact({ ...compaction, instructions: `${MARK} Discard everything.` })
   expect(r.skip).toBeUndefined()
   expect(r.messages?.length).toBe(1)
   expect(r.messages?.[0]?.role).toBe('user')
   expect(r.messages?.[0]?.text).toMatch(/^Context was cleaned on purpose with \/clean/)
   expect(engineSaw).toBe('')
 
-  const withNote = await $.session.compact({ instructions: `${MARK} Discard everything.\nread Docs/SessionNotes.md first` })
+  const withNote = await $.session.compact({ ...compaction, instructions: `${MARK} Discard everything.\nread Docs/SessionNotes.md first` })
   expect(withNote.messages?.[0]?.text).toMatch(/The person's note for the fresh start: read Docs\/SessionNotes.md first$/)
   expect(engineSaw).toBe('')
 })
@@ -29,7 +32,7 @@ test("another plugin's or the person's compaction is left to the engine", async 
     engineSaw = e.instructions ?? ''
     return engineSummary
   })
-  const r = await $.session.compact({ instructions: 'keep the plan' })
+  const r = await $.session.compact({ ...compaction, instructions: 'keep the plan' })
   expect(r.skip).toBeUndefined()
   expect(r.messages?.[0]?.text).toBe('ENGINE SUMMARY')
   expect(engineSaw).toBe('keep the plan')
@@ -52,7 +55,7 @@ test('/clean answers at once and then runs the built-in /compact with the marked
   })
 
   await $.session.start({ cwd: '/', surface: 'terminal', isInteractive: true })
-  const out = await $.command.run({ command: 'clean', args: 'read Docs/SessionNotes.md first' })
+  const out = await $.command.run({ ...typed, command: 'clean', args: 'read Docs/SessionNotes.md first' })
   expect(out.text).toBe('Cleaning the context; the note for the fresh start: read Docs/SessionNotes.md first')
   expect(compactRuns).toEqual([])
 
